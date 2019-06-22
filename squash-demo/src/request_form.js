@@ -46,7 +46,7 @@ function RequestForm(props) {
             Enter input text
             <FormText>(Note - Separate paragraphs with newline characters. Do not insert any sensitive information.)</FormText>
             <Input type="textarea" name="text" id="squashInputText" rows="10" /> <br />
-            <Button color="primary"><span className="squashtitleemph" onclick={props.squashDoc}>SQUASH</span></Button>
+            <Button color="primary"  onClick={props.squashDoc}><span className="squashtitleemph">SQUASH</span></Button>
         </Form>
     );
 }
