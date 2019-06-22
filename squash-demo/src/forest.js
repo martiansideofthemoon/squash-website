@@ -3,6 +3,7 @@ import {
     Badge,
     Container,
     Col,
+    Button,
     Row
 } from 'reactstrap';
 
@@ -23,28 +24,45 @@ function SpecificQA(props) {
     );
 }
 
-function QATree(props) {
-    const specific_list = props.qa_tree.children.map((specific_qa, index) => {
-        return <SpecificQA specific_qa={specific_qa} key={specific_qa.id} />
-    })
+class QATree extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            qa_tree: props.qa_tree,
+            expanded: false
+        };
+    }
 
-    return (
-        <div>
-        <Row>
-            <Col xs="1"></Col>
-            <Col xs="11">
-                <div className='general-qa-view'>
-                    <p className='general-qa-text'>
-                        <span className='general-question'><b>{'GQ: ' + props.qa_tree.question}</b></span><br/>
-                        <span className='general-answer'>{'GA-orig: ' + props.qa_tree.answers[0].text}</span><br/>
-                        <span className='general-answer'>{'GA-pred: ' + props.qa_tree.predicted_answer}</span>
-                    </p>
-                </div>
-            </Col>
-        </Row>
-        {specific_list}
-        </div>
-    );
+    toggle() {
+        console.log(this)
+        this.setState({expanded: !this.state.expanded});
+    }
+
+    render() {
+        const specific_list = this.state.qa_tree.children.map((specific_qa, index) => {
+            return <SpecificQA specific_qa={specific_qa} key={specific_qa.id} />
+        })
+
+        return (
+            <div>
+            <Row>
+                <Col xs="1" className="general-button-div">
+                        <Button color="info" onClick={() => this.toggle()}>{this.state.expanded ? '-' : '+'}</Button>
+                </Col>
+                <Col xs="11">
+                    <div className='general-qa-view'>
+                        <p className='general-qa-text'>
+                            <span className='general-question'><b>{'GQ: ' + this.state.qa_tree.question}</b></span><br/>
+                            <span className='general-answer'>{'GA-orig: ' + this.state.qa_tree.answers[0].text}</span><br/>
+                            <span className='general-answer'>{'GA-pred: ' + this.state.qa_tree.predicted_answer}</span>
+                        </p>
+                    </div>
+                </Col>
+            </Row>
+            {this.state.expanded && specific_list}
+            </div>
+        );
+    }
 }
 
 function ParagraphForest(props) {

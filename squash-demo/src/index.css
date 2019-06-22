@@ -72,3 +72,9 @@ code {
 .slider-track-high {
 	background: #CCCCCC;
 }
+
+.general-button-div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
