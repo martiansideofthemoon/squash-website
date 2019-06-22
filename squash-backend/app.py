@@ -12,7 +12,7 @@ app = Flask(__name__)
 def get_squash():
     squash_id = request.args['id']
 
-    with open('data/%s.json' % squash_id, 'r') as f:
+    with open('/home/kalpesh/squash-generation/squash/final/%s.json' % squash_id, 'r') as f:
         squash_data = json.loads(f.read())
 
     response = flask.jsonify({
