@@ -11,3 +11,64 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  	font-family: 'jdfont';
+  	src: URL('j.d.ttf') format('truetype');
+}
+
+.para-text-div {
+    border-style: solid;
+    border-color: #D6B656;
+    border-radius: 12px;
+    background-color: #FFF2CC;
+    padding: 5px;
+}
+
+.para-text {
+    margin-bottom: 0px;
+}
+
+.general-qa-view {
+    border-style: solid;
+    border-color: #6C8EBF;
+    border-radius: 12px;
+    background-color: #DAE8FC;
+    padding: 5px;
+}
+
+.general-qa-text {
+    margin-bottom: 0px;
+}
+
+.specific-qa-view {
+    border-style: solid;
+    border-color: #B85450;
+    border-radius: 12px;
+    background-color: #F8CECC;
+    padding: 5px;
+}
+
+.specific-qa-text {
+    margin-bottom: 0px;
+}
+
+.squashtitleemph {
+  	font-family: 'jdfont', cursive;
+}
+
+#top-p-slider .slider-selection {
+	background: #82B366;
+}
+
+#general-slider .slider-selection {
+	background: #6C8EBF;
+}
+
+#specific-slider .slider-selection {
+	background: #B85450;
+}
+
+.slider-track-high {
+	background: #CCCCCC;
+}
