@@ -11,7 +11,7 @@ squash-root/squash-website
 
 ## SQuASH Landing Page
 
-The landing page is a static HTML file which can be found under [`squash-landing`](squash-landing). All the code is written in [`squash-landing/index.html`](squash-landing/index.html). The website is hosted at [http://squash.cs.umass.edu/](http://squash.cs.umass.edu/).
+The landing page is a static HTML file which can be found under [`squash-landing`](squash-landing). All the code is written in [`squash-landing/index.html`](squash-landing/index.html). The website is hosted at [http://squash.cs.umass.edu/](http://squash.cs.umass.edu/). This file has been adapted from [Rowan Zeller](https://rowanzellers.com)'s landing page for [HellaSwag](https://rowanzellers.com/hellaswag/).
 
 ## SQuASH Backend
 
