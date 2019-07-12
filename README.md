@@ -22,7 +22,7 @@ export FLASK_APP=squash-backend/app.py
 python -m flask run --host 0.0.0.0 --port 3001
 ```
 
-Remove the `--host 0.0.0.0` flag if you do not want to expose the APIs publicly. Also note that you will need to restart the Flask server to reflect edits in the codebase. This server is running on `squash.cs.mass.edu:3001`.
+Remove the `--host 0.0.0.0` flag if you do not want to expose the APIs publicly. Also note that you will need to restart the Flask server to reflect edits in the codebase. This server is running on [http://squash.cs.mass.edu:3001](http://squash.cs.mass.edu:3001).
 
 ## SQuASH Frontend
 
@@ -35,7 +35,7 @@ npm install
 npm start
 ```
 
-This server is running on `squash.cs.mass.edu:3000`.
+This server is running on [http://squash.cs.mass.edu:3000](http://squash.cs.mass.edu:3000).
 
 ## Citation
 
