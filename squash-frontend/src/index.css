@@ -78,3 +78,12 @@ code {
 	align-items: center;
 	justify-content: center;
 }
+
+
+.cell-completed {
+  background: #33DD33;
+}
+
+.cell-pending {
+  background: #FFF2CC;
+}

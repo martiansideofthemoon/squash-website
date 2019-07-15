@@ -11,13 +11,38 @@ app = Flask(__name__)
 
 @app.route('/get_squash', methods=['GET'])
 def get_squash():
-    squash_id = request.args['id']
+    squash_key = request.args['id']
 
-    with open('/home/kalpesh/squash-generation/squash/final/%s.json' % squash_id, 'r') as f:
-        squash_data = json.loads(f.read())
+    queue_number = 0
+
+    with open("../../squash-generation/squash/temp/queue.txt", "r") as f:
+        for i, line in enumerate(f):
+            if squash_key == line.strip():
+                queue_number = i + 1
+
+    with open("../../squash-generation/squash/temp/%s/metadata.json" % squash_key, "r") as f:
+        metadata = json.loads(f.read())
+
+    if queue_number == 0:
+        with open('../../squash-generation/squash/final/%s.json' % squash_key, 'r') as f:
+            squash_data = json.loads(f.read())
+        status = None
+    else:
+        squash_data = None
+        temp_files = {x: 1 for x in os.listdir("../../squash-generation/squash/temp/%s" % squash_key)}
+        status = {
+            "answers_extracted": "input.pkl" in temp_files,
+            "questions_generated": "generated_questions.json" in temp_files,
+            "answers_generated": "final_qa_set.json" in temp_files,
+            "questions_filtered": False
+        }
 
     response = flask.jsonify({
-        "squash_data": squash_data
+        "squash_data": squash_data,
+        "queue_number": queue_number,
+        "settings": metadata["settings"],
+        "input_text": metadata["input_text"],
+        "status": status
     })
 
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -27,7 +52,7 @@ def get_squash():
 @app.route('/request_squash', methods=['POST'])
 def request_squash():
     form_data = json.loads(request.data.decode('utf-8'))
-    keygen = secrets.token_urlsafe(12)
+    keygen = secrets.token_hex(12)
 
     form_data["timestamp"] = str(datetime.datetime.now())
     form_data["key"] = keygen

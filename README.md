@@ -18,7 +18,8 @@ The landing page is a static HTML file which can be found under [`squash-landing
 The code for the SQuASH APIs and backend is found under [`squash-backend`](squash-backend). All the code is written in [`squash-backend/app.py`](squash-backend/app.py). The code requires Python 3.6+ (for the `secrets` module) as well as the python package [Flask](https://palletsprojects.com/p/flask/). This code triggers the scripts in a fork of the main SQuASH repository. To get started,
 
 ```
-export FLASK_APP=squash-backend/app.py
+cd squash-backend
+export FLASK_APP=app.py
 python -m flask run --host 0.0.0.0 --port 3001
 ```
 

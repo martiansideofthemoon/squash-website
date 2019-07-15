@@ -7,12 +7,77 @@ import {
     Button,
     Form,
     Input,
-    Card
+    Card,
+    Table
 } from 'reactstrap';
 import SquashForest from './forest.js';
 import RequestForm from './request_form.js';
 import SERVER_URL from './url.js';
 
+
+function cellCompleted(status) {
+    if (status) {
+        return <td className="cell-completed">COMPLETED</td>
+    } else {
+        return <td className="cell-pending">PENDING</td>
+    }
+}
+
+function makeTable(status) {
+    return (
+        <Table className="status-table">
+            <thead>
+                <tr>
+                    <th>Step</th><th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Answer Extraction</td>{cellCompleted(status.answers_extracted)}
+                </tr>
+                <tr>
+                    <td>Question Generation</td>{cellCompleted(status.questions_generated)}
+                </tr>
+                <tr>
+                    <td>Answer Generation</td>{cellCompleted(status.answers_generated)}
+                </tr>
+                <tr>
+                    <td>Question Filtering</td>{cellCompleted(status.questions_filtered)}
+                </tr>
+            </tbody>
+        </Table>
+    )
+}
+
+
+function QueueNumber(props) {
+    var status_table = makeTable(props.status)
+    if (props.queue_number === 1) {
+        return (
+            <div>
+                <div>
+                    <h5>Your document is being processed, please refresh this link after a few minutes.</h5>
+                </div>
+                <br />
+                <div>
+                    {status_table}
+                </div>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <div>
+                    <h5>Your document is in the queue, {props.queue_number - 1} document(s) before you. Please refresh this link after a few minutes.</h5>
+                </div>
+                <br />
+                <div>
+                    {status_table}
+                </div>
+            </div>
+        )
+    }
+}
 
 class SquashDemo extends React.Component {
     constructor(props) {
@@ -26,7 +91,10 @@ class SquashDemo extends React.Component {
                 'gen_frac': 0.5,
                 'spec_frac': 0.8
             },
-            forest: null
+            forest: null,
+            queue_number: null,
+            input_text: null,
+            status: null
         };
     }
 
@@ -40,9 +108,18 @@ class SquashDemo extends React.Component {
             var url = SERVER_URL + "/get_squash?id=" + this.state.squashId
 
             fetch(url).then(res => res.json()).then((result) => {
-                document.getElementById("squashInputText").value = this.buildInputString(result.squash_data)
+                if (result.input_text) {
+                    document.getElementById("squashInputText").value = result.input_text
+                }
                 this.setState({
-                    forest: result.squash_data
+                    forest: result.squash_data,
+                    queue_number: result.queue_number,
+                    settings: {
+                        'top_p': result.settings.top_p,
+                        'gen_frac': result.settings.gen_frac,
+                        'spec_frac': result.settings.spec_frac
+                    },
+                    status: result.status
                 });
 
             }, (error) => {
@@ -93,6 +170,7 @@ class SquashDemo extends React.Component {
                     </Col>
                     <Col xs="7">
                         {squash_loaded && <SquashForest forest={this.state.forest}/>}
+                        {this.state.queue_number !== null && this.state.queue_number !== 0 && <QueueNumber queue_number={this.state.queue_number} status={this.state.status}/>}
                     </Col>
                 </Row>
             </div>
