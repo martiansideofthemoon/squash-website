@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "google-analytics-js": "^0.1.2",
     "jquery": "^3.4.1",
     "react": "^16.8.6",
     "react-bootstrap-slider": "^2.2.2",
     "react-compound-slider": "^2.0.0",
     "react-dom": "^16.8.6",
+    "react-ga": "^2.6.0",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.0"
   },

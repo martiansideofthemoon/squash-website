@@ -16,7 +16,10 @@ function RequestForm(props) {
 
     return (
         <Form>
-            top-p sampling value = {props.settings.top_p} <br/> <ReactBootstrapSlider
+            top-p sampling value = {props.settings.top_p}
+            <FormText>(As the p value increases, the likelihood of sampling from the tail distribution of the softmax increases.
+                       Refer to <a href="https://arxiv.org/pdf/1904.09751.pdf">Holtzman et al. 2019</a> for more details.)</FormText>
+            <ReactBootstrapSlider
                 value={props.settings.top_p}
                 change={props.changeSliderTopP}
                 id="top-p-slider"
@@ -24,8 +27,11 @@ function RequestForm(props) {
                 max={1.0}
                 min={0.0}
                 orientation="horizontal"/>
-            <br />
-            fraction of general questions retained = {props.settings.gen_frac} <br/> <ReactBootstrapSlider
+            <hr />
+            fraction of general questions retained = {props.settings.gen_frac}
+            <FormText>(Increasing this will retain a larger number of general, high-level overview questions about the
+                       input text, which form the upper layer of the QA hierarchy.)</FormText>
+            <ReactBootstrapSlider
                 value={props.settings.gen_frac}
                 change={props.changeSliderGenFrac}
                 id="general-slider"
@@ -33,8 +39,11 @@ function RequestForm(props) {
                 max={1.0}
                 min={0.0}
                 orientation="horizontal"/>
-            <br />
-            fraction of specific questions retained = {props.settings.spec_frac} <br/> <ReactBootstrapSlider
+            <hr />
+            fraction of specific questions retained = {props.settings.spec_frac}
+            <FormText>(Increasing this will retain a larger number of specific, low-level drill-down questions about the
+                       input text, which form the lower layer of the QA hierarchy.)</FormText>
+            <ReactBootstrapSlider
                 value={props.settings.spec_frac}
                 change={props.changeSliderSpecFrac}
                 id="specific-slider"
@@ -42,10 +51,11 @@ function RequestForm(props) {
                 max={1.0}
                 min={0.0}
                 orientation="horizontal"/>
-            <br />
+            <hr />
             Enter input text
-            <FormText>(Note - Separate paragraphs with newline characters. Do not insert any sensitive information.)</FormText>
-            <Input type="textarea" name="text" id="squashInputText" rows="10" /> <br />
+            <FormText>(Separate paragraphs with newline characters. Do not insert any sensitive information.
+                       More than 4 paragraphs / 10000 characters in a paragraph will be truncated.)</FormText>
+            <Input type="textarea" name="text" id="squashInputText" rows="8" /> <br />
             <Button color="primary"  onClick={props.squashDoc}><span className="squashtitleemph">SQUASH</span></Button>
         </Form>
     );

@@ -56,7 +56,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    <h5>Your document is being processed, please refresh this link after a few minutes.</h5>
+                    <h5>Your document is being processed, please check back in a minute.</h5>
                 </div>
                 <br />
                 <div>
@@ -98,13 +98,8 @@ class SquashDemo extends React.Component {
         };
     }
 
-    buildInputString(squash_data) {
-        var elements = squash_data.qa_tree.map((para) => {return para.para_text});
-        return elements.join('\n\n');
-    }
-
-    componentDidMount() {
-        if (this.state.squashId) {
+    getSquashedDocument() {
+        if (this.state.squashId && this.state.queue_number !== 0) {
             var url = SERVER_URL + "/get_squash?id=" + this.state.squashId
 
             fetch(url).then(res => res.json()).then((result) => {
@@ -126,6 +121,15 @@ class SquashDemo extends React.Component {
                 console.log(error)
             })
         }
+    }
+
+    componentDidMount() {
+        this.getSquashedDocument.bind(this)();
+        this.interval = setInterval(this.getSquashedDocument.bind(this), 15000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     changeSlider(e, type) {
@@ -158,7 +162,7 @@ class SquashDemo extends React.Component {
         return (
             <div className="container-fluid">
                 <Row>
-                    <Col xs="5">
+                    <Col md={{order: 2, size: 5}} xs={{order: 2}}>
                     <RequestForm
                         forest={this.state.forest}
                         settings={this.state.settings}
@@ -168,7 +172,7 @@ class SquashDemo extends React.Component {
                         squashDoc={() => this.squashDoc()}
                     />
                     </Col>
-                    <Col xs="7">
+                    <Col md={{order: 2, size: 7}} xs={{order: 1}}>
                         {squash_loaded && <SquashForest forest={this.state.forest}/>}
                         {this.state.queue_number !== null && this.state.queue_number !== 0 && <QueueNumber queue_number={this.state.queue_number} status={this.state.status}/>}
                     </Col>
