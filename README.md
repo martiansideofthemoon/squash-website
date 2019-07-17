@@ -1,8 +1,8 @@
 # Generating Question-Answer Hierarchies - Website
 
-This is the official repository for the website and demo accompanying the ACL 2019 long paper *[Generating Question-Answer Hierarchies](https://arxiv.org/abs/1906.02622)*. The main codebase and data can be found in [martiansideofthemoon/squash-generation](https://github.com/martiansideofthemoon/squash-generation).
+This is the official repository for the website and demo accompanying the ACL 2019 long paper *[Generating Question-Answer Hierarchies](https://arxiv.org/abs/1906.02622)*. The main codebase and data can be found in [martiansideofthemoon/squash-generation](https://github.com/martiansideofthemoon/squash-generation), in the `demo` branch.
 
-To get started, place this repository as a sister folder to the repository [martiansideofthemoon/squash-generation](https://github.com/martiansideofthemoon/squash-generation). Your folder structure should look like this,
+To get started, place this repository as a sister folder to the repository [martiansideofthemoon/squash-generation](https://github.com/martiansideofthemoon/squash-generation). Switch to the `demo` branch using `git checkout demo`. Your folder structure should look like this,
 
 ```
 squash-root/squash-generation

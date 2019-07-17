@@ -13,7 +13,9 @@ import {
 import SquashForest from './forest.js';
 import RequestForm from './request_form.js';
 import SERVER_URL from './url.js';
+import ReactGA from 'react-ga';
 
+ReactGA.initialize('UA-144025713-1');
 
 function cellCompleted(status) {
     if (status) {
@@ -125,6 +127,7 @@ class SquashDemo extends React.Component {
 
     componentDidMount() {
         this.getSquashedDocument.bind(this)();
+        ReactGA.pageview(window.location.pathname + window.location.search);
         this.interval = setInterval(this.getSquashedDocument.bind(this), 15000);
     }
 
