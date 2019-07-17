@@ -9,13 +9,13 @@ squash-root/squash-generation
 squash-root/squash-website
 ```
 
-## SQuASH Landing Page
+## SQUASH Landing Page
 
 The landing page is a static HTML file which can be found under [`squash-landing`](squash-landing). All the code is written in [`squash-landing/index.html`](squash-landing/index.html). The website is hosted at [http://squash.cs.umass.edu/](http://squash.cs.umass.edu/). This file has been adapted from [Rowan Zeller](https://rowanzellers.com)'s landing page for [HellaSwag](https://rowanzellers.com/hellaswag/).
 
-## SQuASH Backend
+## SQUASH Backend
 
-The code for the SQuASH APIs and backend is found under [`squash-backend`](squash-backend). All the code is written in [`squash-backend/app.py`](squash-backend/app.py). The code requires Python 3.6+ (for the `secrets` module) as well as the python package [Flask](https://palletsprojects.com/p/flask/). This code triggers the scripts in a fork of the main SQuASH repository. To get started,
+The code for the SQUASH APIs and backend is found under [`squash-backend`](squash-backend). All the code is written in [`squash-backend/app.py`](squash-backend/app.py). The code requires Python 3.6+ (for the `secrets` module) as well as the python package [Flask](https://palletsprojects.com/p/flask/). This code triggers the scripts in a fork of the main SQUASH repository. To get started,
 
 ```
 cd squash-backend
@@ -25,9 +25,9 @@ python -m flask run --host 0.0.0.0 --port 3001
 
 Remove the `--host 0.0.0.0` flag if you do not want to expose the APIs publicly. Also note that you will need to restart the Flask server to reflect edits in the codebase.
 
-## SQuASH Frontend
+## SQUASH Frontend
 
-The SQuASH frontend has been written in [ReactJS](http://reactjs.org/). To get started, make sure you the latest `npm` and `node` installed ([reference](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)). The dependencies for the frontend have been specified in [`squash-frontend/package.json`](squash-frontend/package.json).
+The SQUASH frontend has been written in [ReactJS](http://reactjs.org/). To get started, make sure you the latest `npm` and `node` installed ([reference](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)). The dependencies for the frontend have been specified in [`squash-frontend/package.json`](squash-frontend/package.json).
 
 To get started, first edit the [`squash-frontend/src/url.js`](squash-frontend/src/url.js) to point to the local server URL. Then, install the dependencies and run the frontend server (while the backend is running on a different process and port),
 
