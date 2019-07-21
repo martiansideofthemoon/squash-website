@@ -58,7 +58,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    <h5>Your document is being processed, please check back in a minute.</h5>
+                    <h5>Your document is being processed. The status will auto-refresh every 15 seconds, please check back in sometime.</h5>
                 </div>
                 <br />
                 <div>
@@ -70,7 +70,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    <h5>Your document is in the queue, {props.queue_number - 1} document(s) before you. Please refresh this link after a few minutes.</h5>
+                    <h5>Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 15 seconds, please check back in sometime.</h5>
                 </div>
                 <br />
                 <div>
@@ -91,7 +91,7 @@ class SquashDemo extends React.Component {
             settings: {
                 'top_p': 0.9,
                 'gen_frac': 0.5,
-                'spec_frac': 0.8
+                'spec_frac': 0.5
             },
             forest: null,
             queue_number: null,

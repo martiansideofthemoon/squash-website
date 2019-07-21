@@ -59,10 +59,10 @@ def request_squash():
 
     # Filter out extra newline characters between paragraphs
     input_text_list = [x for x in form_data["input_text"].split("\n") if len(x.strip()) > 0]
-    # Filter out input text with more than 4 paragraphs
-    input_text_list = input_text_list[:4]
-    # Finally, truncate paragraphs with more than 10000 characters
-    form_data["input_text"] = "\n".join([x[:10000] for x in input_text_list])
+    # Filter out input text with more than 3 paragraphs
+    input_text_list = input_text_list[:3]
+    # Finally, truncate paragraphs with more than 2000 characters
+    form_data["input_text"] = "\n".join([x[:2000] for x in input_text_list])
 
     with open("../../squash-generation/squash/temp/queue.txt", "a") as f:
         f.write("%s\n" % keygen)

@@ -12,7 +12,8 @@
     "react-dom": "^16.8.6",
     "react-ga": "^2.6.0",
     "react-scripts": "3.0.1",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "serve": "^11.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
