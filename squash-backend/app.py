@@ -4,7 +4,10 @@ from flask import request
 import json
 import datetime
 import os
+import re
 import secrets
+
+references_regex = re.compile(r"\[\d+\]")
 
 app = Flask(__name__)
 
@@ -63,6 +66,9 @@ def request_squash():
     input_text_list = input_text_list[:3]
     # Finally, truncate paragraphs with more than 2000 characters
     form_data["input_text"] = "\n".join([x[:2000] for x in input_text_list])
+
+    for reference in references_regex.findall(form_data["input_text"]):
+        form_data["input_text"] = form_data["input_text"].replace(reference, " ")
 
     with open("../../squash-generation/squash/temp/queue.txt", "a") as f:
         f.write("%s\n" % keygen)

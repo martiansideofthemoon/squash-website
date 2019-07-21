@@ -58,7 +58,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    <h5>Your document is being processed. The status will auto-refresh every 15 seconds, please check back in sometime.</h5>
+                    Your document is being processed. The status will auto-refresh every 15 seconds, please check back in sometime. It typically takes about 30 seconds to 1 minute per paragraph.
                 </div>
                 <br />
                 <div>
@@ -70,7 +70,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    <h5>Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 15 seconds, please check back in sometime.</h5>
+                    Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 15 seconds, please check back in sometime.
                 </div>
                 <br />
                 <div>
@@ -93,10 +93,12 @@ class SquashDemo extends React.Component {
                 'gen_frac': 0.5,
                 'spec_frac': 0.5
             },
+            ans_mode: 'original',
             forest: null,
             queue_number: null,
             input_text: null,
-            status: null
+            status: null,
+            expanded: null
         };
     }
 
@@ -108,6 +110,10 @@ class SquashDemo extends React.Component {
                 if (result.input_text) {
                     document.getElementById("squashInputText").value = result.input_text
                 }
+                var expanded = null;
+                if (result.squash_data != null) {
+                    expanded = result.squash_data.qa_tree.map((para, para_index) => para.binned_qas.map((qa_tree, qa_index) => false));
+                }
                 this.setState({
                     forest: result.squash_data,
                     queue_number: result.queue_number,
@@ -116,7 +122,8 @@ class SquashDemo extends React.Component {
                         'gen_frac': result.settings.gen_frac,
                         'spec_frac': result.settings.spec_frac
                     },
-                    status: result.status
+                    status: result.status,
+                    expanded: expanded
                 });
 
             }, (error) => {
@@ -139,6 +146,20 @@ class SquashDemo extends React.Component {
         var new_settings = this.state.settings;
         new_settings[type] = e.target.value;
         this.setState({settings: new_settings});
+    }
+
+    toggleSpecific(para_index, qa_index) {
+        var new_expanded = this.state.expanded;
+        new_expanded[para_index][qa_index] = !this.state.expanded[para_index][qa_index]
+        this.setState({
+            expanded: new_expanded
+        });
+    }
+
+    toggleAnswerMode() {
+        this.setState({
+            ans_mode: (this.state.ans_mode === 'original' ? 'predicted' : 'original')
+        });
     }
 
     squashDoc() {
@@ -165,6 +186,16 @@ class SquashDemo extends React.Component {
         return (
             <div className="container-fluid">
                 <Row>
+                    <Col md={{order: 2, size: 5}} xs={{order: 1}}>
+                        <h5>A demo for <a href="https://arxiv.org/abs/1906.02622">Generating Question-Answer Hierarchies</a></h5>
+                        <p>Click <a href="http://squash.cs.umass.edu/">here</a> to go back to the landing page.</p>
+                        <hr />
+                    </Col>
+                    <Col md={{order: 2, size: 7}} xs={{order: 2}}>
+
+                    </Col>
+                </Row>
+                <Row>
                     <Col md={{order: 2, size: 5}} xs={{order: 2}}>
                     <RequestForm
                         forest={this.state.forest}
@@ -176,7 +207,11 @@ class SquashDemo extends React.Component {
                     />
                     </Col>
                     <Col md={{order: 2, size: 7}} xs={{order: 1}}>
-                        {squash_loaded && <SquashForest forest={this.state.forest}/>}
+                        {squash_loaded && <SquashForest forest={this.state.forest}
+                                                        ans_mode={this.state.ans_mode}
+                                                        toggleAnswerMode={() => this.toggleAnswerMode()}
+                                                        toggleSpecific={(para_index, qa_index) => this.toggleSpecific(para_index, qa_index)}
+                                                        expanded={this.state.expanded}/>}
                         {this.state.queue_number !== null && this.state.queue_number !== 0 && <QueueNumber queue_number={this.state.queue_number} status={this.state.status}/>}
                     </Col>
                 </Row>

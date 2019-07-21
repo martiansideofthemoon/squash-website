@@ -81,9 +81,22 @@ code {
 
 
 .cell-completed {
-  background: #33DD33;
+  color: #FFFFFF;
+  background: #2e7d32;
 }
 
 .cell-pending {
-  background: #FFF2CC;
+  color: #000000;
+}
+
+.toggle-div {
+  font-size: 13pt;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.toggle-sub-div {
+  padding: 2px;
+  margin: 2px;
 }
