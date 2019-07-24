@@ -58,7 +58,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    Your document is being processed. The status will auto-refresh every 15 seconds, please check back in sometime. It typically takes about 30 seconds to 1 minute per paragraph.
+                    Your document is being processed. The status will auto-refresh every 5 seconds, It typically takes about 30 seconds to 1 minute per paragraph.
                 </div>
                 <br />
                 <div>
@@ -70,7 +70,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 15 seconds, please check back in sometime.
+                    Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 5 seconds.
                 </div>
                 <br />
                 <div>
@@ -135,7 +135,7 @@ class SquashDemo extends React.Component {
     componentDidMount() {
         this.getSquashedDocument.bind(this)();
         ReactGA.pageview(window.location.pathname + window.location.search);
-        this.interval = setInterval(this.getSquashedDocument.bind(this), 15000);
+        this.interval = setInterval(this.getSquashedDocument.bind(this), 5000);
     }
 
     componentWillUnmount() {

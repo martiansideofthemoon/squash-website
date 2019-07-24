@@ -17,7 +17,7 @@ function RequestForm(props) {
     return (
         <Form>
             top-p sampling value = {props.settings.top_p}
-            <FormText>(As the p value increases, the likelihood of sampling from the tail distribution of the softmax increases.
+            <FormText>Iincreasing the p value results in more diverse questions at the expense of grammaticality since sampling from the tail gets more likely.
                        Refer to <a href="https://arxiv.org/pdf/1904.09751.pdf">Holtzman et al. 2019</a> for more details.)</FormText>
             <ReactBootstrapSlider
                 value={props.settings.top_p}

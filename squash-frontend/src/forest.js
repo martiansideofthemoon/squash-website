@@ -10,7 +10,9 @@ import {
 import Toggle from 'react-toggle'
 
 function chooseAnswerType(qa_object, ans_mode) {
-    if (ans_mode === 'original') {
+    // For SPECIFIC questions generated from sentences, display the predicted answer as far as possible
+    // Do this even when the ans_mode is original
+    if (ans_mode === 'original' && qa_object.algorithm !== 'specific_sent') {
         return qa_object.answers[0].text;
     } else if (qa_object.predicted_answer) {
         return qa_object.predicted_answer;
