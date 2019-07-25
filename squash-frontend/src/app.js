@@ -75,7 +75,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 5 seconds.
+                    Your document is in the queue, {props.queue_number - 1} document(s) before you. The status will auto-refresh every 5 seconds. It typically takes 10-15 seconds per document.
                 </div>
                 <br />
                 <div>
