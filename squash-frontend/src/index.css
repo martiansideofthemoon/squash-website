@@ -100,3 +100,10 @@ code {
   padding: 2px;
   margin: 2px;
 }
+
+.precomputed-div {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}

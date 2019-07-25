@@ -9,8 +9,8 @@ import {
     Input,
     Card,
     Table,
+    FormText,
     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    FormText
 } from 'reactstrap';
 import SquashForest from './forest.js';
 import RequestForm from './request_form.js';
@@ -204,9 +204,10 @@ class SquashDemo extends React.Component {
                 <Row>
                     <Col md={{order: 2, size: 5}} xs={{order: 1}}>
                         <h5>A demo for <a href="https://arxiv.org/abs/1906.02622">Generating Question-Answer Hierarchies</a></h5>
-                        <p>This system converts a sequence of paragraphs into a hierarchy of question-answer pairs, determined by the specificity of the questions.
+                        <p>This system converts a sequence of paragraphs into a hierarchy of question-answer pairs, with general questions at the top level and specific questions underneath.
                          Check out our <a href="http://squash.cs.umass.edu/">landing page</a> for more details.
                          Feel free to fork and use the <a href="https://github.com/martiansideofthemoon/squash-website">source code</a> for this demo.</p>
+                        <p>Contact <a href="mailto:kalpesh@cs.umass.edu">kalpesh@cs.umass.edu</a> if you run into any issues.</p>
 
                     </Col>
                     <Col md={{order: 2, size: 7}} xs={{order: 2}}>
@@ -227,9 +228,10 @@ class SquashDemo extends React.Component {
                                 <br />
                             </div>
                             <div>
-                            <FormText>When set to "Original Answers", the answers to the questions are the inputs
-                            supplied to the question generation module. When set to "Predicted Answers", the answers are the
-                            outputs of a BERT-based question answering module on our generated questions. </FormText>
+                            <FormText>When set to "Original answers", the displayed answers will be the same as the text spans provided to the question generation
+                            system as input (see section 3.1 of the <a href="https://arxiv.org/pdf/1906.02622.pdf#page=3">paper</a>). When set to "Predicted answers", the displayed answers are the output of a BERT-based QA
+                            model when fed the generated questions. Predicted answers are generally shorter and more accurate, while original answers offer more insight into
+                            the context that produced the question. </FormText>
                             </div>
                             <hr />
                         </div>
@@ -238,20 +240,21 @@ class SquashDemo extends React.Component {
                 </Row>
                 <Row>
                     <Col md={{order: 2, size: 5}} xs={{order: 2}}>
-
                     <div>
-                      <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
+                    <div className="precomputed-div">
+                    Enter your text or&nbsp;&nbsp;
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                         <DropdownToggle color="info" caret>
-                          Choose pre-computed example
+                          choose an example
                         </DropdownToggle>
                         <DropdownMenu>
                           <DropdownItem tag="a" href="/?id=04bf8a42f934944809e76ec1">Cricket</DropdownItem>
                           <DropdownItem tag="a" href="/?id=848af1edf495207591a26421">The Fellowship of the Ring</DropdownItem>
                           <DropdownItem tag="a" href="/?id=e3aa9319ffb32bc53162ba78">Walt Disney</DropdownItem>
                         </DropdownMenu>
-                      </Dropdown>
-
-                        <hr />
+                    </Dropdown>
+                    </div>
+                    <hr />
 
                     <RequestForm
                         forest={this.state.forest}
