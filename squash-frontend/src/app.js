@@ -249,8 +249,8 @@ class SquashDemo extends React.Component {
                         </DropdownToggle>
                         <DropdownMenu>
                           <DropdownItem tag="a" href="/?id=04bf8a42f934944809e76ec1">Cricket</DropdownItem>
-                          <DropdownItem tag="a" href="/?id=848af1edf495207591a26421">The Fellowship of the Ring</DropdownItem>
-                          <DropdownItem tag="a" href="/?id=e3aa9319ffb32bc53162ba78">Walt Disney</DropdownItem>
+                          <DropdownItem tag="a" href="/?id=bbd2ba3e440ff9abb52f211f">The Fellowship of the Ring</DropdownItem>
+                          <DropdownItem tag="a" href="/?id=e3aebbb37fa9d1c48638aa46">Neil Armstrong</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     </div>

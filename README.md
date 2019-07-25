@@ -20,14 +20,35 @@ The code for the SQUASH APIs and backend is found under [`squash-backend`](squas
 ```
 cd squash-backend
 export FLASK_APP=app.py
-python -m flask run --host 0.0.0.0 --port 3001
-
-# in a different terminal,
-cd ../squash-generation
-squash/pipeline_demo.sh
+python -m flask run --host 0.0.0.0 --port 3005
 ```
 
 Remove the `--host 0.0.0.0` flag if you do not want to expose the APIs publicly. Also note that you will need to restart the Flask server to reflect edits in the codebase.
+
+Next, in a different terminal enter the `squash-generation` directory and create an empty file named `squash/temp/queue.txt`.
+
+```
+touch squash/temp/queue.txt
+```
+
+Finally, in five different terminals (all with `squash-generation` as the root folder launch the following scripts
+
+```
+# terminal 1
+python squash/extract_answers.py
+
+# terminal 2
+python question-generation/interact.py --model_checkpoint question-generation/gpt2_corefs_question_generation --model_type gpt2
+
+# terminal 3
+python question-answering/run_squad_demo.py --bert_model question-answering/bert_large_qa_model --do_predict --do_lower_case --predict_batch_size 16 --version_2_with_negative
+
+# terminal 4
+python squash/filter.py
+
+# terminal 5
+python squash/cleanup.py
+```
 
 ## SQUASH Frontend
 
@@ -38,6 +59,23 @@ To get started, first edit the [`squash-frontend/src/url.js`](squash-frontend/sr
 ```
 npm install
 npm start
+```
+
+## Production Level Deployment
+
+For a production level deployment, you should not use developmental servers. For the backend server, we use [waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/). To run the server use,
+
+```
+cd squash-backend
+python waitress_server.py
+```
+
+For the frontend server, first create a static website and then [serve](https://www.npmjs.com/package/serve) it. See [here](https://facebook.github.io/create-react-app/docs/deployment) for other options and more details.
+
+```
+cd squash-frontend
+npm run build
+npx serve -s build -l 3000
 ```
 
 ## Citation
