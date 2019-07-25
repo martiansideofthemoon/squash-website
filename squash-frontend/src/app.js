@@ -8,12 +8,17 @@ import {
     Form,
     Input,
     Card,
-    Table
+    Table,
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
+    FormText
 } from 'reactstrap';
 import SquashForest from './forest.js';
 import RequestForm from './request_form.js';
 import SERVER_URL from './url.js';
 import ReactGA from 'react-ga';
+import { Helmet } from 'react-helmet'
+import Toggle from 'react-toggle'
+
 
 ReactGA.initialize('UA-144025713-1');
 
@@ -58,7 +63,7 @@ function QueueNumber(props) {
         return (
             <div>
                 <div>
-                    Your document is being processed. The status will auto-refresh every 5 seconds, It typically takes about 30 seconds to 1 minute per paragraph.
+                    Your document is being processed. The status will auto-refresh every 5 seconds, It typically takes about 3-6 seconds per paragraph.
                 </div>
                 <br />
                 <div>
@@ -98,7 +103,8 @@ class SquashDemo extends React.Component {
             queue_number: null,
             input_text: null,
             status: null,
-            expanded: null
+            expanded: null,
+            dropdownOpen: false
         };
     }
 
@@ -162,6 +168,12 @@ class SquashDemo extends React.Component {
         });
     }
 
+      toggleDropDown() {
+        this.setState(prevState => ({
+          dropdownOpen: !prevState.dropdownOpen
+        }));
+      }
+
     squashDoc() {
         var url = SERVER_URL + "/request_squash";
         var flags = {
@@ -185,18 +197,62 @@ class SquashDemo extends React.Component {
         }
         return (
             <div className="container-fluid">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SQUASH!</title>
+                </Helmet>
                 <Row>
                     <Col md={{order: 2, size: 5}} xs={{order: 1}}>
                         <h5>A demo for <a href="https://arxiv.org/abs/1906.02622">Generating Question-Answer Hierarchies</a></h5>
-                        <p>Click <a href="http://squash.cs.umass.edu/">here</a> to go back to the landing page.</p>
-                        <hr />
+                        <p>This system converts a sequence of paragraphs into a hierarchy of question-answer pairs, determined by the specificity of the questions.
+                         Check out our <a href="http://squash.cs.umass.edu/">landing page</a> for more details.
+                         Feel free to fork and use the <a href="https://github.com/martiansideofthemoon/squash-website">source code</a> for this demo.</p>
+
                     </Col>
                     <Col md={{order: 2, size: 7}} xs={{order: 2}}>
-
+                        {
+                        squash_loaded &&
+                        <div className="switch-answer-div">
+                            <hr />
+                            <div className="toggle-div">
+                                <div className="toggle-sub-div">
+                                    <span>Original Answers</span>
+                                </div>
+                                <div className="toggle-sub-div">
+                                    <Toggle defaultChecked={this.state.ans_mode === 'predicted'} icons={false} onChange={() => this.toggleAnswerMode()} />
+                                </div>
+                                <div className="toggle-sub-div">
+                                    <span>Predicted Answers</span>
+                                </div>
+                                <br />
+                            </div>
+                            <div>
+                            <FormText>When set to "Original Answers", the answers to the questions are the inputs
+                            supplied to the question generation module. When set to "Predicted Answers", the answers are the
+                            outputs of a BERT-based question answering module on our generated questions. </FormText>
+                            </div>
+                            <hr />
+                        </div>
+                        }
                     </Col>
                 </Row>
                 <Row>
                     <Col md={{order: 2, size: 5}} xs={{order: 2}}>
+
+                    <div>
+                      <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
+                        <DropdownToggle color="info" caret>
+                          Choose pre-computed example
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem tag="a" href="/?id=04bf8a42f934944809e76ec1">Cricket</DropdownItem>
+                          <DropdownItem tag="a" href="/?id=848af1edf495207591a26421">The Fellowship of the Ring</DropdownItem>
+                          <DropdownItem tag="a" href="/?id=e3aa9319ffb32bc53162ba78">Walt Disney</DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+
+                        <hr />
+
                     <RequestForm
                         forest={this.state.forest}
                         settings={this.state.settings}
@@ -205,6 +261,7 @@ class SquashDemo extends React.Component {
                         changeSliderSpecFrac={(e) => this.changeSlider(e, 'spec_frac')}
                         squashDoc={() => this.squashDoc()}
                     />
+                    </div>
                     </Col>
                     <Col md={{order: 2, size: 7}} xs={{order: 1}}>
                         {squash_loaded && <SquashForest forest={this.state.forest}

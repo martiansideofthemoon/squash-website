@@ -47,7 +47,7 @@ function QATree(props) {
         <div>
         <Row>
             <Col xs="1" className="general-button-div">
-                    <Button color="info" onClick={props.toggle}>{props.expanded ? '-' : '+'}</Button>
+                    <Button color="info" onClick={props.toggle} disabled={props.qa_tree.children.length === 0}>{props.expanded ? '-' : '+'}</Button>
             </Col>
             <Col xs="11">
                 <div className='general-qa-view'>
@@ -74,6 +74,7 @@ function ParagraphForest(props) {
     })
     return (
         <div className='para-view'>
+            <h4>Paragraph #{props.number}</h4>
             <div className='para-text-div'>
                 <p className='para-text'>{props.para_forest.para_text}</p>
             </div>
@@ -88,23 +89,14 @@ function SquashForest(props) {
         return <ParagraphForest
                 para_forest={para}
                 key={'para_num_' + para_index}
+                number={para_index + 1}
                 ans_mode={props.ans_mode}
                 toggle={(qa_index) => props.toggleSpecific(para_index, qa_index)}
                 expanded={props.expanded[para_index]}/>
     })
     return (
         <div>
-        <div className="toggle-div">
-            <div className="toggle-sub-div">
-                <span>Original Answers</span>
-            </div>
-            <div className="toggle-sub-div">
-                <Toggle defaultChecked={props.ans_mode === 'predicted'} icons={false} onChange={props.toggleAnswerMode} />
-            </div>
-            <div className="toggle-sub-div">
-                <span>Predicted Answers</span>
-            </div>
-        </div>
+        <p>Press the + button to expand a question tree. </p>
         <div className="squash-forest">{para_list}</div>
         </div>
     );
