@@ -12,8 +12,8 @@ references_regex = re.compile(r"\[\d+\]")
 app = Flask(__name__)
 
 
-@app.route('/get_squash', methods=['GET'])
-def get_squash():
+@app.route('/get_squash_doc', methods=['GET'])
+def get_squash_doc():
     squash_key = request.args['id']
 
     queue_number = 0
@@ -52,8 +52,8 @@ def get_squash():
     return response
 
 
-@app.route('/request_squash', methods=['POST'])
-def request_squash():
+@app.route('/request_squash_doc', methods=['POST'])
+def request_squash_doc():
     form_data = json.loads(request.data.decode('utf-8'))
     keygen = secrets.token_hex(12)
 

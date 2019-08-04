@@ -110,7 +110,7 @@ class SquashDemo extends React.Component {
 
     getSquashedDocument() {
         if (this.state.squashId && this.state.queue_number !== 0) {
-            var url = SERVER_URL + "/get_squash?id=" + this.state.squashId
+            var url = SERVER_URL + "/get_squash_doc?id=" + this.state.squashId
 
             fetch(url).then(res => res.json()).then((result) => {
                 if (result.input_text) {
@@ -175,7 +175,7 @@ class SquashDemo extends React.Component {
       }
 
     squashDoc() {
-        var url = SERVER_URL + "/request_squash";
+        var url = SERVER_URL + "/request_squash_doc";
         var flags = {
             method: 'POST',
             body: JSON.stringify({
