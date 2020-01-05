@@ -50,6 +50,8 @@ python squash/filter.py
 python squash/cleanup.py
 ```
 
+(For running these commands together, you might find the `tmux` command under **Production Level Deployment** useful)
+
 ## SQUASH Frontend
 
 The SQUASH frontend has been written in [ReactJS](http://reactjs.org/). To get started, make sure you the latest `npm` and `node` installed ([reference](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)). The dependencies for the frontend have been specified in [`squash-frontend/package.json`](squash-frontend/package.json).
@@ -76,6 +78,20 @@ For the frontend server, first create a static website and then [serve](https://
 cd squash-frontend
 npm run build
 npx serve -s build -l 3000
+```
+
+You might find this all-in-one `tmux` command useful.
+
+```
+tmux new -s squash \
+    "cd squash-website/squash-backend ; python waitress_server.py ; read" \; \
+    new-window "cd squash-website/squash-frontend ; npx serve -s build -l 3000 ; read" \; \
+    new-window "cd squash-generation ; python squash/extract_answers.py ; read" \; \
+    new-window "cd squash-generation ; export CUDA_VISIBLE_DEVICES=0 ; python question-generation/interact.py --model_checkpoint question-generation/gpt2_corefs_question_generation --model_type gpt2 ; read" \; \
+    new-window "cd squash-generation ; export CUDA_VISIBLE_DEVICES=0 ; python question-answering/run_squad_demo.py --bert_model question-answering/bert_large_qa_model --do_predict --do_lower_case --predict_batch_size 16 --version_2_with_negative ; read" \; \
+    new-window "cd squash-generation ; python squash/filter.py ; read" \; \
+    new-window "cd squash-generation ; python squash/cleanup.py ; read" \; \
+    detach \;
 ```
 
 ## Citation
