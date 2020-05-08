@@ -25,10 +25,10 @@ python -m flask run --host 0.0.0.0 --port 3005
 
 Remove the `--host 0.0.0.0` flag if you do not want to expose the APIs publicly. Also note that you will need to restart the Flask server to reflect edits in the codebase.
 
-Next, in a different terminal enter the `squash-generation` directory and create an empty file named `squash/temp/queue.txt`.
+Next, in a different terminal enter the `squash-generation` directory and create an empty file named `squash/generated_outputs/queue/queue.txt`.
 
 ```
-touch squash/temp/queue.txt
+touch squash/generated_outputs/queue/queue.txt
 ```
 
 Finally, in five different terminals (all with `squash-generation` as the root folder launch the following scripts
